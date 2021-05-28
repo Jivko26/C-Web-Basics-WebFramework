@@ -10,26 +10,26 @@ namespace MyWebServer.Server
     {
         private readonly IPAddress ipAddress;
         private readonly int port;
-        private readonly TcpListener listener;
+        private readonly TcpListener tcpListener;
 
         public HttpServer(string ipAddress, int port)
         {
             this.ipAddress = IPAddress.Parse(ipAddress);
             this.port = port;
 
-            listener = new TcpListener(this.ipAddress, port);
+            tcpListener = new TcpListener(this.ipAddress, port);
         }
 
         public async Task Start()
         {
-            this.listener.Start();
+            this.tcpListener.Start();
 
             Console.WriteLine($"Server started on port {port}...");
             Console.WriteLine("Listening for requests...");
 
             while (true)
             {
-                var connection = await this.listener.AcceptTcpClientAsync();
+                var connection = await this.tcpListener.AcceptTcpClientAsync();
 
                 var networkStream = connection.GetStream();
 
